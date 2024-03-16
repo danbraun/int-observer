@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-  margin-block: 8rem;
+  margin-block: 4rem;
   text-align: center;
 }
 
@@ -18,7 +18,13 @@ main {
 
 main div.photo {
   text-align: center;
-  margin-block: 15rem;
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+p {
+  max-width: 400px;
+  font-size: 3rem;
+  margin-inline: auto;
 }
 
 .photo img {
@@ -33,8 +39,7 @@ main div.photo {
 }
 
 .photo[aria-hidden=true] img {
-  translate: -50% 0;
-  opacity: 0;
+  opacity: 1;
 }
 
 .sticky-status-box {
@@ -57,47 +62,11 @@ main div.photo {
   top: 4rem;
 }
 
-#ssb2 {
-  top: 8rem;
-}
-
-#ssb3 {
-  top: 12rem;
-}
-
-#ssb4 {
-  top: 16rem;
-}
-
-#ssb5 {
-  top: 20rem;
-}
-
-#ssb6 {
-  top: 24rem;
-}
-
-#ssb7 {
-  top: 28rem;
-}
-
-#ssb8 {
-  top: 32rem;
-}
-
-#ssb9 {
-  top: 36rem;
-}
-
-#ssb10 {
-  top: 40rem;
-}
-
 .root-bounds {
   position: fixed;
   z-index: 1;
   left: 8rem;
-  bottom: calc(50% + 1rem);
+  top: 4rem;
   border: 1px red solid;
   padding: 1rem;
 }
@@ -109,6 +78,43 @@ hr {
   border: none;
   width: 100%;
   border-top: 1px red solid;
+}
+
+.row-of-things {
+  --thing-opacity: 0.2;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 35rem;
+  justify-items: center;
+}
+.row-of-things > div {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(224, 255, 255, var(--thing-opacity));
+  transition: all 500ms;
+}
+.row-of-things > div.active {
+  --thing-opacity: 1;
+}
+
+.rootTop, .rootBottom {
+  background-color: rgba(255, 192, 203, 0.2);
+  height: 30%;
+  width: 100%;
+}
+
+.rootTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.rootBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

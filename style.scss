@@ -6,7 +6,7 @@ body {
     color: lightblue;
 }
 h1 {
-    margin-block: 8rem;
+    margin-block: 4rem;
     text-align: center;
 }
 main {
@@ -14,8 +14,14 @@ main {
 }
 main div.photo {
     text-align: center;
-    margin-block: 15rem;
+    background-color: rgba(blue, 0.2);
 }
+p {
+    max-width: 400px;
+    font-size: 3rem;
+    margin-inline: auto;
+}
+
 .photo img {
     transition: all 500ms;
     opacity: 0;
@@ -26,8 +32,7 @@ main div.photo {
     opacity: 1;
 }
 .photo[aria-hidden="true"] img {
-    translate: -50% 0;
-    opacity: 0;
+    opacity: 1;
 }
 
 .sticky-status-box {
@@ -44,16 +49,16 @@ main div.photo {
     background-color: lightgreen;
     color: black;
 }
-@for $i from 1 through 10 {
-    #ssb#{$i} {
-        top: calc($i * 4rem);
-    }
+
+#ssb1 {
+    top: 4rem;
 }
+
 .root-bounds {
     position: fixed;
     z-index: 1;
     left: 8rem;
-    bottom: calc(50% + 1rem);
+    top: 4rem;
     border:  1px red solid;
     padding: 1rem;
 }
@@ -64,4 +69,40 @@ hr {
     border: none;
     width: 100%;
     border-top: 1px red solid;
+}
+
+.row-of-things {
+    --thing-opacity: 0.2;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    width: 35rem;
+    justify-items: center;
+
+    & > div {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(lightcyan, var(--thing-opacity));
+        transition: all 500ms;
+    }
+    & > div.active {
+        --thing-opacity: 1;
+    }
+}
+
+.rootTop, .rootBottom {
+    background-color: rgba(pink, 0.2);
+    height: 30%;
+    width: 100%;
+}
+.rootTop {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.rootBottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }

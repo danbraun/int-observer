@@ -1,13 +1,21 @@
 let thresholdArray = []
+let numOfThings = document.querySelectorAll('.row-of-things > div').length;
+let triggerCount = 0
+let prevRatio = 0.0
 
-for (var i = 0; i <= 20; i++) {
-  thresholdArray.push(i / 20)
+for (var i = 0; i <= numOfThings; i++) {
+  thresholdArray.push(i / numOfThings)
 }
-console.log(thresholdArray)
+console.info(thresholdArray)
 
+/*
+TODO: make this dynamic using window resize - or avoid
+effect on mobile?
+*/
+let vertRootMargin = (window.innerHeight > 1024) ? "-30%" : "0px";
 let options = {
   root: null,
-  rootMargin: "-30%",
+  rootMargin: `${vertRootMargin} 0px`,
   threshold: thresholdArray,
 };
 
@@ -15,32 +23,21 @@ const targetImage = document.querySelector('.photo-4 img')
 
 let callback = (entries, observer) => {
   let entry = entries[0]
-  let ratio = entry.intersectionRatio
-  let targetName = entry.target.classList
-  document.querySelector('.root-bounds').innerHTML = targetName +'<br>'+ratio
-  // targetImage.style.opacity = ratio;
+  if (triggerCount > 5 || entry.intersectionRatio < prevRatio) return
 
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.setAttribute('aria-hidden', false)
-      const id = entry.target.dataset.photo
-      const display = document.querySelector(`#ssb${id}`)
-      display.innerHTML = "show"
-      display.classList.add('green')
-    } else {
-      entry.target.setAttribute('aria-hidden', true)
-      const id = entry.target.dataset.photo
-      const display = document.querySelector(`#ssb${id}`)
-      display.innerHTML = "hide"
-      display.classList.remove('green')
-    }
+  console.log('count:', triggerCount)
+  let thing = document.querySelector(`.row-of-things .thing-${triggerCount}`)
+  if (thing) thing.classList.add('active')
 
-  });
+  document.querySelector('.root-bounds').innerHTML = 'COUNT:<br>'+triggerCount
+
+  triggerCount++
+  prevRatio = entry.intersectionRatio
 };
 
 let observer = new IntersectionObserver(callback, options);
-// observer.observe(document.querySelector('.photo-4'));
+observer.observe(document.querySelector('.photo-1'));
 
-document.querySelectorAll('.photo').forEach( (el) => {
-    observer.observe(el)
-})
+// document.querySelectorAll('.photo').forEach( (el) => {
+//     observer.observe(el)
+// })
