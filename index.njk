@@ -4,9 +4,16 @@ layout: base.njk
 ---
 <main>
     <h1>{{ title }}</h1>
-    {% for i in range (0, 10) -%}
-        <div class="photo photo-{{ i }}" aria-hidden=true>
+    {% for i in range (1, 11) -%}
+        <div class="photo photo-{{ i }}" aria-hidden=true data-photo="{{i}}">
+            <p>{{ i }}</p>
             <img width="600" height="300" src="https://picsum.photos/600/300?{{ i }}" alt="">
         </div>
+        <div id="ssb{{i}}" class="sticky-status-box">{{i}}</div>
     {% endfor -%}
+
+    <hr>
+    <div class="root-bounds">
+        0
+    </div>
 </main>

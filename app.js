@@ -1,35 +1,45 @@
-console.log("started!");
+let thresholdArray = []
+
+for (var i = 0; i <= 20; i++) {
+  thresholdArray.push(i / 20)
+}
+console.log(thresholdArray)
 
 let options = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 1,
+  root: null,
+  rootMargin: "-30%",
+  threshold: thresholdArray,
 };
 
+const targetImage = document.querySelector('.photo-4 img')
+
 let callback = (entries, observer) => {
-    entries.forEach((entry) => {
-        let classes = entry.target.classList
-        if (entry.isIntersecting) {
-            entry.target.setAttribute('aria-hidden', false)
-        } else {
-            entry.target.setAttribute('aria-hidden', true)
-        }
-        console.log(entry.target, entry.target.getAttribute('aria-hidden'))
-        // console.log(
-      // Each entry describes an intersection change for one observed
-      // target element:
-      //   entry.boundingClientRect
-      //   entry.intersectionRatio
-      //   entry.intersectionRect
-        // entry.isIntersecting,
-      //   entry.rootBounds
-        // entry.target
-      //   entry.time
-    //   )
-    });
-  };
+  let entry = entries[0]
+  let ratio = entry.intersectionRatio
+  let targetName = entry.target.classList
+  document.querySelector('.root-bounds').innerHTML = targetName +'<br>'+ratio
+  // targetImage.style.opacity = ratio;
+
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.setAttribute('aria-hidden', false)
+      const id = entry.target.dataset.photo
+      const display = document.querySelector(`#ssb${id}`)
+      display.innerHTML = "show"
+      display.classList.add('green')
+    } else {
+      entry.target.setAttribute('aria-hidden', true)
+      const id = entry.target.dataset.photo
+      const display = document.querySelector(`#ssb${id}`)
+      display.innerHTML = "hide"
+      display.classList.remove('green')
+    }
+
+  });
+};
 
 let observer = new IntersectionObserver(callback, options);
+// observer.observe(document.querySelector('.photo-4'));
 
 document.querySelectorAll('.photo').forEach( (el) => {
     observer.observe(el)

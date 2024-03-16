@@ -1,29 +1,114 @@
 html, body {
-    background: black;
-    font-family:Arial, Helvetica, sans-serif
+  background: black;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
 body {
-    color: lightblue;
+  color: lightblue;
 }
+
 h1 {
-    margin-block: 8rem;
-    text-align: center;
+  margin-block: 8rem;
+  text-align: center;
 }
-main div {
-    text-align: center;
-    margin-block: 15rem;
+
+main {
+  position: relative;
 }
+
+main div.photo {
+  text-align: center;
+  margin-block: 15rem;
+}
+
 .photo img {
-    transition: all 500ms;
-    opacity: 1;
-    /* translate: 0 0; */
-}
-.photo[aria-hidden="false"] img {
-    translate: 0 0;
-
+  transition: all 500ms;
+  opacity: 0;
+  translate: 0 0;
 }
 
-.photo[aria-hidden="true"] img {
-    translate: -50% 0;
-    opacity: 0;
+.photo[aria-hidden=false] img {
+  translate: 0 0;
+  opacity: 1;
 }
+
+.photo[aria-hidden=true] img {
+  translate: -50% 0;
+  opacity: 0;
+}
+
+.sticky-status-box {
+  border: white solid 2px;
+  background-color: darkred;
+  position: fixed;
+  padding: 1rem 0;
+  left: 1rem;
+  width: 4rem;
+  text-align: center;
+  transition: all 500ms;
+}
+
+.sticky-status-box.green {
+  background-color: lightgreen;
+  color: black;
+}
+
+#ssb1 {
+  top: 4rem;
+}
+
+#ssb2 {
+  top: 8rem;
+}
+
+#ssb3 {
+  top: 12rem;
+}
+
+#ssb4 {
+  top: 16rem;
+}
+
+#ssb5 {
+  top: 20rem;
+}
+
+#ssb6 {
+  top: 24rem;
+}
+
+#ssb7 {
+  top: 28rem;
+}
+
+#ssb8 {
+  top: 32rem;
+}
+
+#ssb9 {
+  top: 36rem;
+}
+
+#ssb10 {
+  top: 40rem;
+}
+
+.root-bounds {
+  position: fixed;
+  z-index: 1;
+  left: 8rem;
+  bottom: calc(50% + 1rem);
+  border: 1px red solid;
+  padding: 1rem;
+}
+
+hr {
+  position: fixed;
+  z-index: 1;
+  bottom: 50%;
+  border: none;
+  width: 100%;
+  border-top: 1px red solid;
+}
+
+/*# sourceMappingURL=style.css.map */
