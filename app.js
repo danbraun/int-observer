@@ -1,46 +1,90 @@
 let thresholdArray = []
+let numOfChars = 0;
+let triggerCount = 1
+let prevRatio = 0.0
 
-for (var i = 0; i <= 20; i++) {
-  thresholdArray.push(i / 20)
+const wrapAndCountCharacters = function () {
+  const wordsContainerParagraph = document.querySelector('#words-to-reveal p');
+  let characters = wordsContainerParagraph.textContent.split('');
+  characters = characters.map((char) => `<span>${char}</span>`)
+  wordsContainerParagraph.innerHTML = characters.join('')
+  numOfChars = characters.length;
+  createThresholds()
 }
-console.log(thresholdArray)
 
-let options = {
-  root: null,
-  rootMargin: "-30%",
-  threshold: thresholdArray,
+const createThresholds = function () {
+  console.log('numOfChars:', numOfChars)
+  for (var i = 0; i <= numOfChars; i++) {
+    thresholdArray.push(i / numOfChars)
+  }
+}
+
+const intObsCallback = function (entries, observer) {
+
+  const entry = entries[0]
+
+  if (!entry.isIntersecting) {
+    triggerCount = 0
+    completeActive(true)
+    return
+  }
+
+  const ratio = entry.intersectionRatio
+
+  if (ratio === 1) {
+    triggerCount = numOfChars
+    completeActive(false)
+    return
+  }
+
+  if (triggerCount > numOfChars) triggerCount = numOfChars
+  if (triggerCount <= 0) triggerCount = 1
+
+  console.log('triggerCount before selector', triggerCount)
+  let character = document.querySelector(`#words-to-reveal p span:nth-child(${triggerCount})`)
+
+  document.querySelector('.root-bounds').innerHTML = `triggerCount:<br> ${triggerCount}<br>numOfChars:<br>${numOfChars}`
+
+  if (ratio < prevRatio) {
+    character.classList.remove('active')
+    triggerCount--
+  } else {
+    character.classList.add('active')
+    triggerCount++
+  }
+
+  prevRatio = ratio
 };
 
-const targetImage = document.querySelector('.photo-4 img')
 
-let callback = (entries, observer) => {
-  let entry = entries[0]
-  let ratio = entry.intersectionRatio
-  let targetName = entry.target.classList
-  document.querySelector('.root-bounds').innerHTML = targetName +'<br>'+ratio
-  // targetImage.style.opacity = ratio;
+const setupIntObserver = function () {
+  /*
+  TODO: make this dynamic using window resize - or avoid
+  effect on mobile?
+  */
+  console.log('window.innerHeight', window.innerHeight)
+  let vertRootMargin = (window.innerHeight > 1024) ? "-20%" : "0px";
+  let options = {
+    root: null,
+    rootMargin: `${vertRootMargin} 0px`,
+    threshold: thresholdArray,
+  };
 
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.setAttribute('aria-hidden', false)
-      const id = entry.target.dataset.photo
-      const display = document.querySelector(`#ssb${id}`)
-      display.innerHTML = "show"
-      display.classList.add('green')
-    } else {
-      entry.target.setAttribute('aria-hidden', true)
-      const id = entry.target.dataset.photo
-      const display = document.querySelector(`#ssb${id}`)
-      display.innerHTML = "hide"
-      display.classList.remove('green')
-    }
+  let observer = new IntersectionObserver(intObsCallback, options);
+  observer.observe(document.querySelector('.photo-1'));
+}
 
-  });
-};
+const completeActive = function (deactivate) {
+  if (deactivate) {
+    const inactive = document.querySelectorAll('#words-to-reveal p span.active')
+    if (inactive) inactive.forEach((span) => span.classList.remove('active'))
+    return
+  }
+  const inactive = document.querySelectorAll('#words-to-reveal p span:not(.active)')
+  inactive.forEach((span) => span.classList.add('active'))
+}
 
-let observer = new IntersectionObserver(callback, options);
-// observer.observe(document.querySelector('.photo-4'));
-
-document.querySelectorAll('.photo').forEach( (el) => {
-    observer.observe(el)
+window.addEventListener("DOMContentLoaded", (event) => {
+  wrapAndCountCharacters()
+  setupIntObserver()
 })

@@ -1,19 +1,31 @@
 ---
-title: FERP FERP FERP
+title: Single Entry
 layout: base.njk
 ---
 <main>
     <h1>{{ title }}</h1>
-    {% for i in range (1, 11) -%}
-        <div class="photo photo-{{ i }}" aria-hidden=true data-photo="{{i}}">
-            <p>{{ i }}</p>
-            <img width="600" height="300" src="https://picsum.photos/600/300?{{ i }}" alt="">
-        </div>
-        <div id="ssb{{i}}" class="sticky-status-box">{{i}}</div>
-    {% endfor -%}
 
-    <hr>
+    {% for i in range (1, 3) -%}
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit culpa veritatis laborum, vel provident facilis rem error eos repellendus ipsam suscipit cum dolor in quas.</p>
+    {% endfor %}
+
+    <div class="photo photo-1" aria-hidden=true data-photo="1">
+
+        <div id="words-to-reveal">
+            <p>Lorem ipsum, dolor sit amet consectetur.</p>
+        </div>
+        <img width="600" height="300" src="https://picsum.photos/600/300" alt="">
+    </div>
+    {% for i in range (1, 3) -%}
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit culpa veritatis laborum, vel provident facilis rem error eos repellendus ipsam suscipit cum dolor in quas.</p>
+    {% endfor %}
+    <div id="ssb1" class="sticky-status-box">1</div>
+
     <div class="root-bounds">
         0
     </div>
+
+    <div class="rootTop"></div>
+    <div class="rootBottom"></div>
+
 </main>
